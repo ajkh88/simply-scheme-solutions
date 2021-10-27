@@ -1,4 +1,3 @@
-#lang simply-scheme
 ;;; The functions program
 
 (define (functions)
@@ -242,3 +241,4 @@
 	      (lambda (x) #t))
 	(list 'word word 2 (lambda (x y) (and (word? x) (word? y))))
 	(list 'word? word? 1 (lambda (x) #t))))
+
