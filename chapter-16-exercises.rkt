@@ -3,7 +3,7 @@
 ; ==============================================================================
 ; ==============================================================================
 
-; Copy source of match.scm - require/load do not work
+; Copy source of match.scm - require/load do not work with #lang simply-scheme
 
 (define (match pattern sent)
   (match-using-known-values pattern sent '()))
@@ -200,6 +200,14 @@
 ; Exercises about Implemetation
 
 ; 16.8
+
+#|
+If the sentence is empty, longest match will test if the minimun number of matches is 0,
+if so, it will proceed to test the pattern, adding the empty sentence '() to known values,
+otherwise, it returns 'failed.
+
+
+|#
 
 
 

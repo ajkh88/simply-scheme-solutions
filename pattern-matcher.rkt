@@ -1,0 +1,32 @@
+#lang simply-scheme
+
+(define (match? pattern sent)              
+  (cond ((empty? pattern)
+	 (empty? sent))
+        ((equal? (first pattern) '?)
+	 (if (empty? sent)
+	     (match? (bf pattern) '())
+	     (or (match? (bf pattern) (bf sent))
+		 (match? (bf pattern) sent))))
+        ((equal? (first pattern) '*)
+	 (*-longest-match (bf pattern) sent))
+	((empty? sent) #f)
+	((equal? (first pattern) '!)
+	 (match? (bf pattern) (bf sent)))
+	((equal? (first pattern) (first sent))
+	 (match? (bf pattern) (bf sent)))
+	(else #f)))
+
+(define (*-longest-match pattern-rest sent)
+  (*-lm-helper pattern-rest sent '()))
+
+(define (*-lm-helper pattern-rest sent-matched sent-unmatched)
+  (cond ((match? pattern-rest sent-unmatched) #t)
+	((empty? sent-matched) #f)
+	(else (*-lm-helper pattern-rest
+			   (bl sent-matched)
+			   (se (last sent-matched) sent-unmatched)))))
+
+(trace match? *-lm-helper *-lm-helper)
+
+(match? '(* days night) '(a hard days night))
